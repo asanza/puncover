@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+import webbrowser
 import argparse
 import os
 from distutils.spawn import find_executable
@@ -46,6 +46,7 @@ def main():
                         help='port the HTTP server runs on')
     parser.add_argument('--host', dest='host', default='127.0.0.1',
                         help='host IP the HTTP server runs on')
+    parser.add_argument('--start_browser', action='store_true', help='starts webbrowser')
     args = parser.parse_args()
 
     if not args.gcc_tools_base:
@@ -62,6 +63,10 @@ def main():
 
     if args.debug:
         app.debug = True
+
+    if args.start_browser:
+        webbrowser.open('{}:{}'.format(args.host, args.port), new=2)
+
     app.run(host=args.host, port=args.port)
 
 
